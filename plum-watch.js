@@ -25,17 +25,25 @@ module.exports.new = function(ip, name) {
                 line = line.substr(0, line.length - 1);
                 if (last_response != line) {
                     last_response = line;
-                    var parsed = JSON.parse(line);
-                    switch (parsed.type) {
-                        case 'power':
-                            myEmitter.emit('power', parsed.watts, name);
-                            break;
-                        case 'pirSignal':
-                            myEmitter.emit('motion', parsed.signal, name);
-                            break;
-                        case 'dimmerchange':
-                            myEmitter.emit('level', parsed.level, name);
-                            break;
+                    try {
+                        var parsed = JSON.parse(line);
+                        if ('type' in parsed) {
+                            switch (parsed.type) {
+                                case 'power':
+                                    myEmitter.emit('power', parsed.watts, name);
+                                    break;
+                                case 'pirSignal':
+                                    myEmitter.emit('motion', parsed.signal, name);
+                                    break;
+                                case 'dimmerchange':
+                                    myEmitter.emit('level', parsed.level, name);
+                                    break;
+                            }
+                        } else {
+                            console.log('unknown input: ' + line);
+                        }
+                    } catch (exp) {
+                        console.log('unknown input: ' + line);
                     }
                 }
             }
