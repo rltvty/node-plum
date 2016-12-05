@@ -2,13 +2,6 @@ var express = require('express');
 var router = express.Router();
 var plum_config = require('../plum-config');
 var plum_request = require('../plum-request');
-var plum_watch = require('../plum-watch');
-
-var living_room = plum_watch.new('10.10.10.145');
-living_room.on('power', function(power) { console.log('power: ' + power); });
-living_room.on('motion', function(motion) { console.log('motion: ' + motion); });
-living_room.on('level', function(level) { console.log('level: ' + level); });
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

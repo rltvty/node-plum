@@ -29,6 +29,23 @@ module.exports.room_props = function(room_name) {
     return null
 };
 
+module.exports.all_ips = function() {
+    var ips = [];
+    for(var i in config.rooms) {
+        var room = config.rooms[i];
+
+        if ('lightpads' in room) {
+            for (var j in room.lightpads) {
+                ips.push({
+                    room_name: room.room_name,
+                    ip: room.lightpads[j].lightpad_ip
+                });
+            }
+        }
+    }
+    return ips;
+};
+
 module.exports.house_token = function() {
     var sha256 = createHash('sha256');
     return sha256.update(config.house_token, 'utf8').digest('hex')
