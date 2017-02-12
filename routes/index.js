@@ -7,7 +7,9 @@ var plum_request = require('../plum-request');
 router.get('/', function(req, res, next) {
   res.status(200).send(
       "GET /rooms\n" +
-      "GET /room/:room_name/status\n"
+      "GET /room/:room_name/status\n" +
+      "POST /rooms/:room_name/level/:level\n" +
+      "\n"
   );
 });
 

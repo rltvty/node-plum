@@ -1,8 +1,6 @@
 var config = require('./house_config.json');
 var createHash = require('sha.js');
 
-
-
 module.exports.rooms = function() {
     var rooms = [];
     for(var i in config.rooms) {
@@ -20,7 +18,8 @@ module.exports.room_props = function(room_name) {
                 return {
                     load_id: room.load_id,
                     ip: room.lightpads[0].lightpad_ip,
-                    port: room.lightpads[0].lightpad_port
+                    port: room.lightpads[0].lightpad_port,
+                    host: room.lightpads[0].lightpad_hostname
                 }
             }
             break;
@@ -38,7 +37,8 @@ module.exports.all_ips = function() {
             for (var j in room.lightpads) {
                 ips.push({
                     room_name: room.room_name,
-                    ip: room.lightpads[j].lightpad_ip
+                    ip: room.lightpads[j].lightpad_ip,
+                    host: room.lightpads[j].lightpad_hostname
                 });
             }
         }
