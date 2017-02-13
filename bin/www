@@ -34,10 +34,7 @@ var watchers = {};
 var bathrooms = {};
 
 for (var i in all_ips) {
-    var name = all_ips[i].room_name;
-    while (name in watchers) {
-        name = name + '_';
-    }
+    var name = all_ips[i].host;
     var watcher = watch.new(all_ips[i].ip, name);
     watcher.on('power', function (power, name) {
         console.log(name + ' power: ' + power);
@@ -52,13 +49,13 @@ for (var i in all_ips) {
     });
     watchers[name] = watcher;
 
-    if (name == 'Downstairs Bathroom' || name == 'Master Bath') {
+    if (name == 'Downstairs Bathroom' || name == 'PlumLP-MasterBath') {
         watcher.on('motion', function (motion, name) {
             var motion_threshold = (name == 'Downstairs Bathroom') ? 720 : 720;
             if (motion > motion_threshold) {
-                console.log('motion detected in ' + name);
+                console.log('motion detected on ' + name);
                 var token = config.house_token();
-                var props = config.room_props(name);
+                var props = config.control_props(name);
                 request.status(token, props,
                     function callback(error, response, body) {
                         if (!error && response.statusCode == 200) {
