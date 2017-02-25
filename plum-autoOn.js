@@ -37,4 +37,5 @@ function getBathroomLevelFromBedroomLevel (bedroomLevel) {
     var b = (y1 - (m * x1));
 
     return Math.ceil((bedroomLevel * m) + b);
+    //TODO:: offset this based on the current state of the sun / actual measured room brightness
 }
