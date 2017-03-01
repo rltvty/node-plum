@@ -4,7 +4,7 @@ var plum_config = require('../plum-config');
 var plum_request = require('../plum-request');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.status(200).send(
       "GET  /rooms\n" +
       "GET  /rooms/:room_name\n" +
@@ -16,28 +16,32 @@ router.get('/', function(req, res, next) {
   );
 });
 
-router.get('/rooms', function(req, res, next) {
+router.get('/rooms', function(req, res) {
     res.status(200).json(plum_config.rooms());
 });
 
-router.get('/rooms/:room_name', function(req, res, next) {
+router.get('/rooms/:room_name', function(req, res) {
     getStatus(getRoomProps(req), res);
 });
 
-router.post('/rooms/:room_name', function(req, res, next) {
+router.post('/rooms/:room_name', function(req, res) {
     setLevel(getRoomProps(req), getLevel(req), res);
 });
 
-router.get('/controls', function(req, res, next) {
+router.get('/controls', function(req, res) {
     res.status(200).json(plum_config.controls());
 });
 
-router.get('/controls/:control_id', function(req, res, next) {
+router.get('/controls/:control_id', function(req, res) {
     getStatus(getControlProps(req), res);
 });
 
-router.post('/controls/:control_id', function(req, res, next) {
+router.post('/controls/:control_id', function(req, res) {
     setLevel(getControlProps(req), getLevel(req), res);
+});
+
+router.all('*', function (req, res) {
+    res.sendStatus(404);
 });
 
 function getRoomProps(req) {
